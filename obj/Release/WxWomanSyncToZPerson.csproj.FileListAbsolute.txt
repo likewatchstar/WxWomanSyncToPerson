@@ -1,0 +1,9 @@
+G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\bin\Release\WxWomanSyncToZPerson.exe.config
+G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\bin\Release\WxWomanSyncToZPerson.exe
+G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\bin\Release\WxWomanSyncToZPerson.pdb
+G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\obj\Release\WxWomanSyncToZPerson.ProjectInstaller.resources
+G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\obj\Release\WxWomanSyncToZPerson.csproj.GenerateResource.cache
+G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\obj\Release\WxWomanSyncToZPerson.csproj.CoreCompileInputs.cache
+G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\obj\Release\WxWomanSyncToZPerson.exe
+G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\obj\Release\WxWomanSyncToZPerson.pdb
+G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\obj\Release\WxWomanSyncToZPerson.csprojAssemblyReference.cache
