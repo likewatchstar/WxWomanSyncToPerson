@@ -7,15 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
+using WxWomanSyncToZPerson;
 
 namespace WxWomanSyncToZPerson.Comm
 {
     class Tool
     {
-        public static string EventLogName = ConfigurationManager.AppSettings["EventLogName"].ToString();
-        public static string EventLogSource=ConfigurationManager.AppSettings["EventLogSource"].ToString();
-        public static EventLog log = new EventLog(EventLogName, Environment.MachineName,EventLogSource);
-        
+        //public static string EventLogName = ConfigurationManager.AppSettings["EventLogName"].ToString();
+        //public static string EventLogSource=ConfigurationManager.AppSettings["EventLogSource"].ToString();
         public static Model.z_person PreparePerson(DataRow row,string Person_Id)
         {
             Model.z_person Model = new Model.z_person();
@@ -391,7 +390,6 @@ namespace WxWomanSyncToZPerson.Comm
         public static void EventLogMethod(SqlTransaction tran,string DomainType, string PrimaryId, string message,DateTime AddTime, EventLogEntryType eventLogEntryType)
         {
             InsertSqlEventLog(tran,DomainType,PrimaryId,message, eventLogEntryType,AddTime);
-            //InsertSystemEventLog(message,eventLogEntryType);
         }
         /// <summary>
         /// 插入日志到数据库
@@ -421,7 +419,8 @@ namespace WxWomanSyncToZPerson.Comm
         /// <param name="eventLogEntryType">日志类型</param>
         public static void InsertSystemEventLog(string message, EventLogEntryType eventLogEntryType)
         {
-            log.WriteEntry(message,eventLogEntryType);
+            Service1 service = new Service1();
+            service.eventLog1.WriteEntry(message, eventLogEntryType);
         }
         public static string SecurityData(Model.z_person Model)
         {

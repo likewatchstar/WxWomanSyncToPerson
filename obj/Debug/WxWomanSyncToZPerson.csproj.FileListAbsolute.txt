@@ -7,3 +7,12 @@ G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\obj\Debug\WxWomanSyncToZPers
 G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\obj\Debug\WxWomanSyncToZPerson.ProjectInstaller.resources
 G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\obj\Debug\WxWomanSyncToZPerson.csproj.GenerateResource.cache
 G:\项目\WxWomanSyncToZPerson\WxWomanSyncToZPerson\obj\Debug\WxWomanSyncToZPerson.Service1.resources
+G:\GitHubDownload\WxWomanSyncToPerson\bin\Debug\WxWomanSyncToZPerson.exe.config
+G:\GitHubDownload\WxWomanSyncToPerson\bin\Debug\WxWomanSyncToZPerson.exe
+G:\GitHubDownload\WxWomanSyncToPerson\bin\Debug\WxWomanSyncToZPerson.pdb
+G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.ProjectInstaller.resources
+G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.Service1.resources
+G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.csproj.GenerateResource.cache
+G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.csproj.CoreCompileInputs.cache
+G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.exe
+G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.pdb

@@ -28,12 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.eventLog1 = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             // 
             // Service1
             // 
             this.ServiceName = "Test";
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
 
         }
         #endregion
+
+        public System.Diagnostics.EventLog eventLog1;
     }
 }
