@@ -16,3 +16,4 @@ G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.csproj.Gene
 G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.csproj.CoreCompileInputs.cache
 G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.exe
 G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.pdb
+G:\GitHubDownload\WxWomanSyncToPerson\obj\Debug\WxWomanSyncToZPerson.csprojAssemblyReference.cache
