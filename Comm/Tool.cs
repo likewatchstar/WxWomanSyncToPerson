@@ -408,7 +408,7 @@ namespace WxWomanSyncToZPerson.Comm
             }
             else
             {
-                SqlHelper.ExecuteNonQuery(sql,CommandType.Text,parm);
+                SqlHelper.ExecuteNonQuery(SqlHelper.CityConnectionString,sql,CommandType.Text,parm);
             }
             
         }

@@ -267,7 +267,7 @@ namespace WxWomanSyncToZPerson
                                         }
                                     }
                                 }
-                                SqlHelper.ExecuteNonQuery(tran,"update WomanSyncToPersonDateTime  set id='" + IndexTime + "'");
+                                SqlHelper.ExecuteNonQuery(SqlHelper.CityConnectionString,"update WomanSyncToPersonDateTime  set id='" + IndexTime + "'");
                                 tran.Commit();
                             }
                         }
