@@ -20,7 +20,7 @@ namespace WxWomanSyncToZPerson
     public partial class Service1 : ServiceBase
     {
 
-        System.Timers.Timer timer = new System.Timers.Timer(1800000);
+        System.Timers.Timer timer = new System.Timers.Timer(300000);
         public Service1()
         {
             Tool.EventLogMethod(null, "", "", "Excute Service1()", DateTime.Now, EventLogEntryType.Information);
@@ -46,6 +46,9 @@ namespace WxWomanSyncToZPerson
         private void OnTimer(object sender, ElapsedEventArgs args)
         {
             Tool.EventLogMethod(null, "", "", "Excute OnTimer()", DateTime.Now, EventLogEntryType.Information);
+            var PrimaryID = "";
+            var DomainType = "";
+            var NeedIdcard = "";
             try
             {
                 DateTime IndexTime = DateTime.Now;
@@ -55,13 +58,11 @@ namespace WxWomanSyncToZPerson
                     conn.Open();
                     using (SqlTransaction tran = conn.BeginTransaction())
                     {
-                        var PrimaryID = "";
-                        var DomainType = "";
-                        var NeedIdcard = "";
+
                         try
                         {
                             DAL.z_personDAL z_PersonDAL = new DAL.z_personDAL();
-                            var sql = "select * from T_SyncRequest where  LastRequestTime>(SELECT * FROM  WomanSyncToPersonDateTime) order by RecordTime";
+                            var sql = "select * from T_SyncRequest where  LastRequestTime>(SELECT * FROM  WomanSyncToPersonDateTime) order by LastRequestTime";
                             var dt = SqlHelper.ExecuteDataSet(sql).Tables[0];
                             if (dt.Rows.Count > 0)
                             {
@@ -87,6 +88,14 @@ namespace WxWomanSyncToZPerson
                                                 {
                                                     sql2 = "select * from w_woman where idcard='" + idcard + "' order by CardDate desc";
                                                 }
+                                                else
+                                                {
+                                                    continue;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                continue;
                                             }
                                         }
                                         var dt2 = SqlHelper.ExecuteDataSet(sql2).Tables[0];
@@ -282,7 +291,7 @@ namespace WxWomanSyncToZPerson
             }
             catch(Exception ex)
             {
-                Tool.EventLogMethod(null, "", "", ex.Message, DateTime.Now, EventLogEntryType.Error);
+                Tool.EventLogMethod(null, DomainType, PrimaryID, ex.Message, DateTime.Now, EventLogEntryType.Error);
                 timer.Start();
             }
         }
