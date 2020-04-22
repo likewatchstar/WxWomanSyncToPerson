@@ -18,7 +18,7 @@ namespace WxWomanSyncToZPerson.DAL
 			StringBuilder strSql=new StringBuilder();
 			StringBuilder strSql1=new StringBuilder();
 			StringBuilder strSql2=new StringBuilder();
-			strSql1.Append("insert into z_person_extend with(rowlock)(");
+			strSql1.Append("insert into z_person_extend (");
 			strSql2.Append("Values(");
 			
 											
@@ -162,7 +162,7 @@ namespace WxWomanSyncToZPerson.DAL
 										
 			strSql.Append(strSql1.ToString().Remove(strSql1.Length - 1)).Append(")");
 			strSql.Append(strSql2.ToString().Remove(strSql2.Length - 1)).Append(")");
-			bool result=SqlHelper.ExecuteNonQuery(strSql.ToString())>0?true:false;
+			bool result=SqlHelper.ExecuteNonQuery(SqlHelper.CityConnectionString,strSql.ToString())>0?true:false;
 			return result;
 		}
 		
@@ -172,7 +172,7 @@ namespace WxWomanSyncToZPerson.DAL
 		public bool Update(Model.z_person_extend model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update z_person_extend with(rowlock) set ");
+			strSql.Append("update z_person_extend  set ");
 									
 			if (!string.IsNullOrEmpty(model.PKID))
 			{
@@ -290,7 +290,7 @@ namespace WxWomanSyncToZPerson.DAL
 			}
             strSql.Append(" where Person_id='"+model.Person_ID+"'");
             						
-			bool result=SqlHelper.ExecuteNonQuery(strSql.ToString())>0?true:false;
+			bool result=SqlHelper.ExecuteNonQuery(SqlHelper.CityConnectionString,strSql.ToString())>0?true:false;
 			return result;
 		}
 		

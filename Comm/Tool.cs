@@ -13,8 +13,6 @@ namespace WxWomanSyncToZPerson.Comm
 {
     class Tool
     {
-        //public static string EventLogName = ConfigurationManager.AppSettings["EventLogName"].ToString();
-        //public static string EventLogSource=ConfigurationManager.AppSettings["EventLogSource"].ToString();
         public static Model.z_person PreparePerson(DataRow row,string Person_Id)
         {
             Model.z_person Model = new Model.z_person();
@@ -25,10 +23,25 @@ namespace WxWomanSyncToZPerson.Comm
             Model.Zjlx = "1";
             Model.Sex = row["sex"].ToString()==""?"1": row["sex"].ToString().Replace("08","");
             Model.Birthday = row["birthday"].ToString()==""?DateTime.Now:DateTime.Parse(row["birthday"].ToString());
-            Model.NationId =row["NationId"].ToString().Substring(2, 2);
+            Model.NationId =row["NationId"].ToString()==""?"": row["NationId"].ToString().Substring(2, 2);
             Model.eduId = row["eduId"].ToString().Replace("02","");
             Model.censusId = row["censusId"].ToString().Replace("03","");
-            Model.marryId = row["marryId"].ToString()==""?"10": row["marryId"].ToString().Replace("04","");
+            if (row["marryId"].ToString() == "")
+            {
+                Model.marryId = "10";
+            }
+            else
+            {
+                if (row["marryId"].ToString() == "0429")
+                {
+                    Model.marryId = "90";
+                }
+                else
+                {
+                    Model.marryId = row["marryId"].ToString().Replace("04", "");
+                }
+
+            }
             Model.addrcode = row["addrcode"].ToString()==""?"3202": row["addrcode"].ToString();
             Model.address = row["address"].ToString();
             Model.addrDoorNo = row["addrDoorNo"].ToString();
@@ -60,7 +73,7 @@ namespace WxWomanSyncToZPerson.Comm
         public static string GetUpdateExtend(DataRow row2, string Person_Id,DateTime dateTime)
         {
             StringBuilder UpdateSql = new StringBuilder();
-            UpdateSql.Append("update z_person_extend with(rowlock) set Person_id='" + Person_Id + "'");
+            UpdateSql.Append("update z_person_extend  set Person_id='" + Person_Id + "'");
             if (row2["H_name"].ToString() != "")
             {
                 UpdateSql.Append(",p_poxm='" + row2["H_name"].ToString() + "'");
@@ -121,7 +134,7 @@ namespace WxWomanSyncToZPerson.Comm
         {
             StringBuilder stringBuilder1 = new StringBuilder();
             StringBuilder stringBuilder2 = new StringBuilder();
-            stringBuilder1.Append("insert into z_person_extend  with(rowlock)(PKID,Person_id");
+            stringBuilder1.Append("insert into z_person_extend  (PKID,Person_id");
             stringBuilder2.Append(" Values('" + Guid.NewGuid().ToString() + "','" + Person_Id + "'");
             if (row["F_Name"].ToString() != "")
             {
@@ -190,10 +203,10 @@ namespace WxWomanSyncToZPerson.Comm
         }
 
 
-        public static string GetUpdateChild(SqlTransaction tran,DataRow row2,string PKID,DateTime dateTime)
+        public static string GetUpdateChild(DataRow row2,string PKID,DateTime dateTime)
         {
             StringBuilder UpdateSql = new StringBuilder();
-            UpdateSql.Append(" update z_child with(rowlock) set PKID='" + PKID + "' ");
+            UpdateSql.Append(" update z_child  set PKID='" + PKID + "' ");
             if (row2["w_id"].ToString() != "")
             {
                 var m_wid = row2["w_id"].ToString().Replace(" ", "");
@@ -203,7 +216,7 @@ namespace WxWomanSyncToZPerson.Comm
                     var MatherIdcard = MatherWisDT.Rows[0]["idcard"].ToString();
                     if (MatherIdcard != "000000000000000000")
                     {
-                        var MatherPersonDT = SqlHelper.ExecuteDataSet(tran, "select * from z_person where idcard='" + MatherIdcard + "' order by AddTime desc").Tables[0];
+                        var MatherPersonDT = SqlHelper.ExecuteDataSet(SqlHelper.CityConnectionString, "select * from z_person where idcard='" + MatherIdcard + "' order by AddTime desc").Tables[0];
                         if (MatherPersonDT.Rows.Count > 0)
                         {
                             UpdateSql.Append(",Nv_PersonID='" + MatherPersonDT.Rows[0]["Person_id"].ToString() + "'");
@@ -279,11 +292,11 @@ namespace WxWomanSyncToZPerson.Comm
         }
 
 
-        public static string GetInsertChild(SqlTransaction tran,DataRow row2,string PKID,DateTime dateTime)
+        public static string GetInsertChild(DataRow row2,string PKID,DateTime dateTime)
         {
             StringBuilder stringBuilder1 = new StringBuilder();
             StringBuilder stringBuilder2 = new StringBuilder();
-            stringBuilder1.Append(" insert into  z_child with(rowlock)(PKID");
+            stringBuilder1.Append(" insert into  z_child (PKID");
             stringBuilder2.Append(" Values('"+PKID+"'");
             if (row2["w_id"].ToString() != "")
             {
@@ -294,7 +307,7 @@ namespace WxWomanSyncToZPerson.Comm
                     var MatherIdcard = MatherWisDT.Rows[0]["idcard"].ToString();
                     if (MatherIdcard != "000000000000000000")
                     {
-                        var MatherPersonDT = SqlHelper.ExecuteDataSet(tran, "select * from z_person where idcard='" + MatherIdcard + "' order by AddTime desc").Tables[0];
+                        var MatherPersonDT = SqlHelper.ExecuteDataSet(SqlHelper.CityConnectionString, "select * from z_person where idcard='" + MatherIdcard + "' order by AddTime desc").Tables[0];
                         if (MatherPersonDT.Rows.Count > 0)
                         {
                             stringBuilder1.Append(",Nv_PersonId");
@@ -387,9 +400,9 @@ namespace WxWomanSyncToZPerson.Comm
         /// <param name="message">日志内容</param>
         /// <param name="sqlEventLog">自定义日志类型</param>
         /// <param name="eventLogEntryType">事件查看器日志类型</param>
-        public static void EventLogMethod(SqlTransaction tran,string DomainType, string PrimaryId, string message,DateTime AddTime, EventLogEntryType eventLogEntryType)
+        public static void EventLogMethod(string DomainType, string PrimaryId, string message,DateTime AddTime, EventLogEntryType eventLogEntryType)
         {
-            InsertSqlEventLog(tran,DomainType,PrimaryId,message, eventLogEntryType,AddTime);
+            InsertSqlEventLog(null,DomainType,PrimaryId,message, eventLogEntryType,AddTime);
         }
         /// <summary>
         /// 插入日志到数据库
@@ -401,7 +414,7 @@ namespace WxWomanSyncToZPerson.Comm
         public static void InsertSqlEventLog(SqlTransaction tran,string DomainType,string PrimaryKey,string message, EventLogEntryType eventLogEntryType,DateTime AddTime)
         {
             SqlParameter parm = new SqlParameter("@message",message);
-            var sql = "insert into WomanSyncToPersonLog with(rowlock) values('" + Guid.NewGuid().ToString()+"','"+PrimaryKey+"','"+DomainType+"',@message,'"+ eventLogEntryType + "','"+ AddTime+ "')";
+            var sql = "insert into WomanSyncToPersonLog  values('" + Guid.NewGuid().ToString()+"','"+PrimaryKey+"','"+DomainType+"',@message,'"+ eventLogEntryType + "','"+ AddTime+ "')";
             if (tran != null)
             {
                 SqlHelper.ExecuteNonQuery(tran,sql,CommandType.Text,parm);
